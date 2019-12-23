@@ -22,8 +22,8 @@ class Board:
             print()
 
 
-    def _check_rows(self, board):
-        for row in board:
+    def _check_rows(self):
+        for row in self.array:
             if len(set(row)) == 1:
                 return row[0]
         return 0
@@ -40,8 +40,7 @@ class Board:
             result = self._check_rows(board)
             if result:
                 return result
-        return self._check_diagonals(self.array)
-
+        return self._check_diagonals()
 
 
 class Player:
@@ -75,7 +74,6 @@ class Player:
 
 def get_player_name(i):
     return input(f"Player {i} name: ")
-
 
 
 if __name__ == "__main__":
