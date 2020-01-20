@@ -1,3 +1,7 @@
+# Tic tac toe implementation
+# AUTHORS: antoine.montes
+# TODO: Rework on check_win
+
 import sys
 import os
 import numpy as np
@@ -13,6 +17,7 @@ class Board:
                 self.array[i].append('-')
 
     def print(self):
+        # Clear console
         os.system('cls' if os.name=='nt' else 'clear')
         print("row    => |0|1|2|")
         for i in range(3):
@@ -37,10 +42,10 @@ class Board:
 
     def check_win(self):
         for board in [self.array, np.transpose(self.array)]:
-            result = self._check_rows(board)
+            result = self._check_rows()
             if result:
                 return result
-        return self._check_diagonals()
+        return self._check_diagonals(self.array)
 
 
 class Player:
@@ -83,17 +88,17 @@ if __name__ == "__main__":
     player_1 = Player(player_1_name, 'X', board)
     player_2 = Player(player_2_name, 'O', board)
 
+    players = [player_1, player_2]
+
+
     while True:
         board.print()
-        player_1.play()
+        for player in players:
+            player.play()
 
-        if board.check_win() == player_1.tick:
-            print(f"Player {player_1.name} won")
-            break
+            if board.check_win() == player.tick:
+                print(f"Player {player.name} won")
+                break
 
-        board.print()
+            board.print()
 
-        player_2.play()
-        if board.check_win() == player_2.tick:
-            print(f"Player {player_2.name} won")
-            break
