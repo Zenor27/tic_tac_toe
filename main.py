@@ -41,6 +41,7 @@ class Board:
         return 0
 
     def check_win(self):
+        # Transpose to check rows and columns
         for board in [self.array, np.transpose(self.array)]:
             result = self._check_rows(board)
             if result:
