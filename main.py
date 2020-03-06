@@ -27,25 +27,25 @@ class Board:
             print()
 
 
-    def _check_rows(self):
-        for row in self.array:
+    def _check_rows(self, board):
+        for row in board:
             if len(set(row)) == 1:
                 return row[0]
         return 0
 
-    def _check_diagonals(self, board):
-        if len(set([board[i][i] for i in range(len(board))])) == 1:
-            return board[0][0]
-        if len(set([board[i][len(board) - i - 1] for i in range(len(board))])) == 1:
-            return board[0][len(board) - 1]
+    def _check_diagonals(self):
+        if len(set([self.array[i][i] for i in range(len(self.array))])) == 1:
+            return self.array[0][0]
+        if len(set([self.array[i][len(self.array) - i - 1] for i in range(len(self.array))])) == 1:
+            return self.array[0][len(self.array) - 1]
         return 0
 
     def check_win(self):
         for board in [self.array, np.transpose(self.array)]:
-            result = self._check_rows()
+            result = self._check_rows(board)
             if result:
                 return result
-        return self._check_diagonals(self.array)
+        return self._check_diagonals()
 
 
 class Player:
@@ -90,15 +90,15 @@ if __name__ == "__main__":
 
     players = [player_1, player_2]
 
-
     while True:
         board.print()
         for player in players:
             player.play()
 
+            print(board.check_win())
             if board.check_win() == player.tick:
-                print(f"Player {player.name} won")
-                break
+                print(f"!!! Player {player.name} won !!!")
+                exit(0)
 
             board.print()
 
